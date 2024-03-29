@@ -24,6 +24,22 @@ __all__ = (
     "DCNv3_PyTorch"
 )
 
+class DCNv3_PyTorch(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size=1, stride=1, groups=1, dilation=1):
+        super().__init__()
+        self.conv = Conv(in_channels, out_channels, k=1)
+        self.dcnv3 = DCNv3_pytorch(out_channels, kernel_size=kernel_size, stride=stride, group=groups,
+                                   dilation=dilation)
+        self.bn = nn.BatchNorm2d(out_channels)
+        self.gelu = nn.GELU()
+
+    def forward(self, x):
+        x = self.conv(x)
+        x = x.permute(0, 2, 3, 1)
+        x = self.dcnv3(x)
+        x = x.permute(0, 3, 1, 2)
+        x = self.gelu(self.bn(x))
+        return x
 
 def autopad(k, p=None, d=1):  # kernel, padding, dilation
     """Pad to 'same' shape outputs."""
@@ -32,6 +48,7 @@ def autopad(k, p=None, d=1):  # kernel, padding, dilation
     if p is None:
         p = k // 2 if isinstance(k, int) else [x // 2 for x in k]  # auto-pad
     return p
+
 
 
 class Conv(nn.Module):

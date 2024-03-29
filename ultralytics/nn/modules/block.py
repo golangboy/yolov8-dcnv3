@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .conv import Conv, DWConv, GhostConv, LightConv, RepConv, autopad, DCNv3_pytorch
+from .conv import Conv, DWConv, GhostConv, LightConv, RepConv, autopad, DCNv3_PyTorch
 from .transformer import TransformerBlock
 
 
@@ -366,7 +366,7 @@ class Bottleneck_DCNV3(nn.Module):
         super().__init__()
         c_ = int(c2 * e)  # hidden channels
         self.cv1 = Conv(c1, c_, k[0], 1)
-        self.cv2 = DCNV3_YoLo(c_, c2, k[1], 1, g=g)
+        self.cv2 = DCNv3_PyTorch(c_, c2, k[1], 1, g=g)
         self.add = shortcut and c1 == c2
 
     def forward(self, x):
