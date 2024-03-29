@@ -6,7 +6,7 @@ import math
 import numpy as np
 import torch
 import torch.nn as nn
-
+from ultralytics.ops_dcnv3.modules.dcnv3 import DCNv3_pytorch  # pytorch版
 __all__ = (
     "Conv",
     "Conv2",
@@ -21,6 +21,7 @@ __all__ = (
     "CBAM",
     "Concat",
     "RepConv",
+    "DCNv3_PyTorch"
 )
 
 

@@ -5,9 +5,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .conv import Conv, DWConv, GhostConv, LightConv, RepConv, autopad
+from .conv import Conv, DWConv, GhostConv, LightConv, RepConv, autopad,DCNv3_pytorch
 from .transformer import TransformerBlock
-import ops_dcnv3.modules.dcnv3 as DD
+
 
 
 __all__ = (
@@ -48,7 +48,7 @@ class DCNV3_YoLo(nn.Module):
         super().__init__()
 
         self.conv = Conv(inc, ouc, k=1)
-        self.dcnv3 = DD.DCNv3_pytorch(ouc, kernel_size=k, stride=s, group=g, dilation=d)  # c++版本
+        self.dcnv3 = DCNv3_pytorch(ouc, kernel_size=k, stride=s, group=g, dilation=d)  # c++版本
         # self.dcnv3 = DCNv3_pytorch(ouc, kernel_size=k, stride=s, group=g, dilation=d) # pytorch版本
         self.bn = nn.BatchNorm2d(ouc)
         self.act = Conv.default_act
