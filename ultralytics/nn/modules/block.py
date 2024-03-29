@@ -38,28 +38,9 @@ __all__ = (
     "CBFuse",
     "CBLinear",
     "Silence",
-    "DCNV3_YoLo"
+    "C2f_DCNV3"
+
 )
-
-
-class DCNV3_YoLo(nn.Module):
-    def __init__(self, inc, ouc, k=1, s=1, p=None, g=1, d=1, act=True):
-        super().__init__()
-
-        self.conv = Conv(inc, ouc, k=1)
-        self.dcnv3 = DCNv3_pytorch(
-            ouc, kernel_size=k, stride=s, group=g, dilation=d)  # c++版本
-        # self.dcnv3 = DCNv3_pytorch(ouc, kernel_size=k, stride=s, group=g, dilation=d) # pytorch版本
-        self.bn = nn.BatchNorm2d(ouc)
-        self.act = Conv.default_act
-
-    def forward(self, x):
-        x = self.conv(x)
-        x = x.permute(0, 2, 3, 1)
-        x = self.dcnv3(x)
-        x = x.permute(0, 3, 1, 2)
-        x = self.act(self.bn(x))
-        return x
 
 
 class DFL(nn.Module):

@@ -46,6 +46,7 @@ from .block import (
     CBFuse,
     CBLinear,
     Silence,
+    C2f_DCNV3
 )
 from .conv import (
     CBAM,
@@ -135,4 +136,5 @@ __all__ = (
     "CBFuse",
     "CBLinear",
     "Silence",
+    "C2f_DCNV3"
 )
