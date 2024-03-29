@@ -1,4 +1,3 @@
-import DCNv3
 from ultralytics import YOLO
 
 if __name__ =='__main__':
