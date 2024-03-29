@@ -39,6 +39,7 @@ __all__ = (
     "CBFuse",
     "CBLinear",
     "Silence",
+    "DCNV3_YoLo"
 )
 
 
